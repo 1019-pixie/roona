@@ -32,25 +32,25 @@ class UserController {
 
     public function createBooking(){
         if(!isset($_SESSION['user'])){ header('Location: index.php?action=login'); exit; }
-        $id_user = $_SESSION['user']['id'];
+        $user_id = $_SESSION['user']['id'];
         $tanggal = $_POST['tanggal_booking'] ?? date('Y-m-d');
         $items = $_POST['items'] ?? [];
         if(empty($items)){ header('Location: index.php?action=catalog'); exit; }
 
-        $id_booking = $this->booking->create($id_user, $tanggal);
+        $booking_id = $this->booking->create($user_id, $tanggal);
         $total = 0;
-        foreach($items as $id_kostum => $qty){
-            $k = $this->kostum->find($id_kostum);
+        foreach($items as $kostum_id => $qty){
+            $k = $this->kostum->find($kostum_id);
             if(!$k) continue;
             $qty = intval($qty);
             if($qty <= 0) continue;
             $subtotal = $k['harga_sewa'] * $qty;
             $total += $subtotal;
-            $this->detail->create($id_booking, $id_kostum, $qty, $subtotal);
-            $this->kostum->reduceStock($id_kostum, $qty);
+            $this->detail->create($booking_id, $kostum_id, $qty, $subtotal);
+            $this->kostum->reduceStock($kostum_id, $qty);
         }
-        $this->transaksi->create($id_booking, $total);
-        header('Location: index.php?action=booking_success&id='.$id_booking);
+        $this->transaksi->create($booking_id, $total);
+        header('Location: index.php?action=booking_success&id='.$booking_id);
     }
 
     public function bookingSuccess(){

@@ -18,43 +18,43 @@ CREATE TABLE kategori_kostum (
 CREATE TABLE kostum (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nama VARCHAR(150) NOT NULL,
-  id_kategori INT,
+  kategori_id INT,
   ukuran VARCHAR(50),
   stok INT DEFAULT 0,
   harga_sewa DECIMAL(12,2) NOT NULL,
   deskripsi TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (id_kategori) REFERENCES kategori_kostum(id) ON DELETE SET NULL
+  FOREIGN KEY (kategori_id) REFERENCES kategori_kostum(id) ON DELETE SET NULL
 );
 
 CREATE TABLE booking (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  id_user INT NOT NULL,
+  user_id INT NOT NULL,
   tanggal_booking DATE NOT NULL,
   status ENUM('pending','confirmed','cancelled','completed') DEFAULT 'pending',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE detail_booking (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  id_booking INT NOT NULL,
-  id_kostum INT NOT NULL,
+  booking_id INT NOT NULL,
+  kostum_id INT NOT NULL,
   qty INT NOT NULL DEFAULT 1,
   subtotal DECIMAL(12,2) NOT NULL,
-  FOREIGN KEY (id_booking) REFERENCES booking(id) ON DELETE CASCADE,
-  FOREIGN KEY (id_kostum) REFERENCES kostum(id) ON DELETE RESTRICT
+  FOREIGN KEY (booking_id) REFERENCES booking(id) ON DELETE CASCADE,
+  FOREIGN KEY (kostum_id) REFERENCES kostum(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE transaksi (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  id_booking INT NOT NULL UNIQUE,
+  booking_id INT NOT NULL UNIQUE,
   total_bayar DECIMAL(12,2) NOT NULL,
   metode_pembayaran VARCHAR(50),
   tanggal_bayar TIMESTAMP NULL,
   status ENUM('unpaid','paid','refunded') DEFAULT 'unpaid',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (id_booking) REFERENCES booking(id) ON DELETE CASCADE
+  FOREIGN KEY (booking_id) REFERENCES booking(id) ON DELETE CASCADE
 );
 
 -- SAMPLE DATA
@@ -65,7 +65,7 @@ VALUES
 
 INSERT INTO kategori_kostum (nama) VALUES ('Tradisional'), ('Modern'), ('Fantasi');
 
-INSERT INTO kostum (nama, id_kategori, ukuran, stok, harga_sewa, deskripsi)
+INSERT INTO kostum (nama, kategori_id, ukuran, stok, harga_sewa, deskripsi)
 VALUES
 ('Kebaya Merah', 1, 'M', 5, 100000, 'Kebaya tradisional warna merah'),
 ('Baju Putri', 3, 'L', 2, 150000, 'Kostum bergaya putri kerajaan'),

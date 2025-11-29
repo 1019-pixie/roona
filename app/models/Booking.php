@@ -3,15 +3,15 @@ class Booking {
     private $pdo;
     public function __construct($pdo){ $this->pdo = $pdo; }
 
-    public function create($id_user, $tanggal){
-        $stmt = $this->pdo->prepare("INSERT INTO booking (id_user,tanggal_booking,status) VALUES (:u,:t,'pending')");
-        $stmt->execute(['u'=>$id_user,'t'=>$tanggal]);
+    public function create($user_id, $tanggal){
+        $stmt = $this->pdo->prepare("INSERT INTO booking (user_id,tanggal_booking,status) VALUES (:u,:t,'pending')");
+        $stmt->execute(['u'=>$user_id,'t'=>$tanggal]);
         return $this->pdo->lastInsertId();
     }
 
-    public function findByUser($id_user){
-        $stmt = $this->pdo->prepare("SELECT b.*, t.total_bayar, t.status as status_bayar FROM booking b LEFT JOIN transaksi t ON b.id=t.id_booking WHERE b.id_user=:u ORDER BY b.created_at DESC");
-        $stmt->execute(['u'=>$id_user]);
+    public function findByUser($user_id){
+        $stmt = $this->pdo->prepare("SELECT b.*, t.total_bayar, t.status as status_bayar FROM booking b LEFT JOIN transaksi t ON b.id=t.booking_id WHERE b.user_id=:u ORDER BY b.created_at DESC");
+        $stmt->execute(['u'=>$user_id]);
         return $stmt->fetchAll();
     }
 

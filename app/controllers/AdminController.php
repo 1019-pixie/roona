@@ -36,7 +36,7 @@ class AdminController {
         $id = intval($_POST['id'] ?? 0);
         $data = [
             'nama' => $_POST['nama'] ?? '',
-            'id_kategori' => $_POST['id_kategori'] ?: null,
+            'kategori_id' => $_POST['kategori_id'] ?: null,
             'ukuran' => $_POST['ukuran'] ?? '',
             'stok' => intval($_POST['stok'] ?? 0),
             'harga_sewa' => floatval($_POST['harga_sewa'] ?? 0),
