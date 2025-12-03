@@ -64,6 +64,19 @@ switch($action){
         if(!isset($_SESSION['user']) || $_SESSION['user']['role']!='admin'){ header('Location: index.php?action=login'); exit; }
         $adminCtrl->listTransaksi();
         break;
+   
+    case 'admin_kategori':
+        if(!isset($_SESSION['user']) || $_SESSION['user']['role']!='admin'){ header('Location: index.php?action=login'); exit; }
+        $adminCtrl->listKategori();
+        break;
+    case 'admin_kategori_form':
+        if(!isset($_SESSION['user']) || $_SESSION['user']['role']!='admin'){ header('Location: index.php?action=login'); exit; }
+        if($_SERVER['REQUEST_METHOD']==='POST') $adminCtrl->saveKategori(); else $adminCtrl->showKategoriForm();
+        break;
+    case 'admin_kategori_delete':
+        if(!isset($_SESSION['user']) || $_SESSION['user']['role']!='admin'){ header('Location: index.php?action=login'); exit; }
+        $adminCtrl->deleteKategori();
+        break;
     default:
         header('Location: index.php?action=catalog');
         break;

@@ -2,17 +2,19 @@
 require_once __DIR__ . '/../models/Kostum.php';
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../models/Transaksi.php';
-
+require_once __DIR__ . '/../models/Kategori.php';
 class AdminController {
     private $pdo;
     private $kostum;
     private $userModel;
     private $transaksi;
+    private $kategoriModel;
     public function __construct($pdo){
         $this->pdo = $pdo;
         $this->kostum = new Kostum($pdo);
         $this->userModel = new User($pdo);
         $this->transaksi = new Transaksi($pdo);
+        $this->kategoriModel = new Kategori($pdo);
     }
 
     public function dashboard(){
@@ -70,5 +72,31 @@ class AdminController {
         $id = intval($_GET['id'] ?? 0);
         $this->transaksi->markPaid($id);
         header('Location: index.php?action=admin_transaksi');
+    }
+    public function listKategori(){
+        $items = $this->kategoriModel->all();
+        include __DIR__ . '/../views/admin/kategori_list.php';
+    }
+
+    public function showKategoriForm(){
+        $id = intval($_GET['id'] ?? 0);
+        $item = $id ? $this->kategoriModel->find($id) : null;
+        include __DIR__ . '/../views/admin/kategori_form.php';
+    }
+    public function saveKategori(){
+        $id = intval($_POST['id'] ?? 0);
+        $nama = $_POST['nama'] ?? '';
+        
+        if($id){
+            $this->kategoriModel->update($id, $nama);
+        } else {
+            $this->kategoriModel->create($nama);
+        }
+        header('Location: index.php?action=admin_kategori');
+    }
+    public function deleteKategori(){
+        $id = intval($_GET['id'] ?? 0);
+        $this->kategoriModel->delete($id);
+        header('Location: index.php?action=admin_kategori');
     }
 }

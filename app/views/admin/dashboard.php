@@ -4,7 +4,7 @@
 <p>Total Users: <?=htmlspecialchars($countUsers)?></p>
 <ul>
   <li><a href="index.php?action=admin_kostum">Kelola Kostum</a></li>
-  <li><a href="index.php?action=admin_users">Kelola Users</a></li>
+  <li><a href="index.php?action=admin_kategori">Kelola Kategori</a> <li><a href="index.php?action=admin_users">Kelola Users</a></li>
   <li><a href="index.php?action=admin_transaksi">Kelola Transaksi</a></li>
 </ul>
 <?php include __DIR__ . '/../partials/footer.php'; ?>
