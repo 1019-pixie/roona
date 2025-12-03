@@ -20,4 +20,8 @@ class Booking {
         $stmt->execute(['id'=>$id]);
         return $stmt->fetch();
     }
+    public function updateStatus($id, $status){
+        $stmt = $this->pdo->prepare("UPDATE booking SET status=:status WHERE id=:id");
+        return $stmt->execute(['status'=>$status, 'id'=>$id]);
+    }
 }

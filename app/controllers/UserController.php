@@ -61,10 +61,46 @@ class UserController {
         include __DIR__ . '/../views/user/booking_success.php';
     }
 
-    public function myBookings(){
+public function myBookings(){
         if(!isset($_SESSION['user'])){ header('Location: index.php?action=login'); exit; }
         $uid = $_SESSION['user']['id'];
+        
+        // Ambil data mentah dari Model
         $bookings = $this->booking->findByUser($uid);
+        
+        // LOGIKA BISNIS DI SINI:
+        // Kita loop data untuk menentukan mana yang boleh dibatalin.
+        // Jadi View tidak perlu mikir "pending itu boleh batal nggak ya?".
+        foreach($bookings as &$b){
+            // Menambahkan flag 'allow_cancel' ke setiap baris data
+            $b['allow_cancel'] = ($b['status'] == 'pending');
+        }
+        unset($b); // Hapus referensi memori
+
         include __DIR__ . '/../views/user/booking_list.php';
+    }
+
+   public function cancelBooking(){
+        if(!isset($_SESSION['user'])){ header('Location: index.php?action=login'); exit; }
+        
+        $id = intval($_GET['id'] ?? 0);
+        $user_id = $_SESSION['user']['id'];
+        
+        $booking = $this->booking->find($id);
+        
+        // Validasi logika bisnis
+        if($booking && $booking['user_id'] == $user_id && $booking['status'] == 'pending'){
+            
+            // 1. Restock Barang
+            $details = $this->detail->findByBooking($id);
+            foreach($details as $d){
+                $this->kostum->increaseStock($d['kostum_id'], $d['qty']);
+            }
+            
+            // 2. Update Status
+            $this->booking->updateStatus($id, 'cancelled');
+        }
+        
+        header('Location: index.php?action=my_bookings');
     }
 }

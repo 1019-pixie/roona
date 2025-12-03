@@ -36,6 +36,9 @@ switch($action){
     case 'my_bookings':
         $userCtrl->myBookings();
         break;
+    case 'cancel_booking':
+        $userCtrl->cancelBooking();
+        break;
     case 'booking_success':
         $userCtrl->bookingSuccess();
         break;
@@ -77,6 +80,7 @@ switch($action){
         if(!isset($_SESSION['user']) || $_SESSION['user']['role']!='admin'){ header('Location: index.php?action=login'); exit; }
         $adminCtrl->deleteKategori();
         break;
+
     default:
         header('Location: index.php?action=catalog');
         break;
