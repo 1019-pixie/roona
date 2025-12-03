@@ -14,14 +14,18 @@ class Kostum {
         return $stmt->fetch();
     }
 
-    public function create($data){
-        $sql = "INSERT INTO kostum (nama,kategori_id,ukuran,stok,harga_sewa,deskripsi) VALUES (:nama,:kategori_id,:ukuran,:stok,:harga_sewa,:deskripsi)";
+   public function create($data){
+        // Tambahkan :gambar di query INSERT
+        $sql = "INSERT INTO kostum (nama,kategori_id,ukuran,stok,harga_sewa,deskripsi,gambar) 
+                VALUES (:nama,:kategori_id,:ukuran,:stok,:harga_sewa,:deskripsi,:gambar)";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($data);
     }
 
     public function update($id, $data){
-        $sql = "UPDATE kostum SET nama=:nama, kategori_id=:kategori_id, ukuran=:ukuran, stok=:stok, harga_sewa=:harga_sewa, deskripsi=:deskripsi WHERE id=:id";
+        $sql = "UPDATE kostum SET nama=:nama, kategori_id=:kategori_id, ukuran=:ukuran, 
+                stok=:stok, harga_sewa=:harga_sewa, deskripsi=:deskripsi, gambar=:gambar 
+                WHERE id=:id";
         $data['id']=$id;
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($data);

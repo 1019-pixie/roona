@@ -36,16 +36,50 @@ class AdminController {
 
     public function saveKostum(){
         $id = intval($_POST['id'] ?? 0);
+        
+        // 1. Siapkan data dasar dari form
         $data = [
             'nama' => $_POST['nama'] ?? '',
             'kategori_id' => $_POST['kategori_id'] ?: null,
             'ukuran' => $_POST['ukuran'] ?? '',
             'stok' => intval($_POST['stok'] ?? 0),
             'harga_sewa' => floatval($_POST['harga_sewa'] ?? 0),
-            'deskripsi' => $_POST['deskripsi'] ?? ''
+            'deskripsi' => $_POST['deskripsi'] ?? '',
+            'gambar' => null 
         ];
+
+        // 2. Jika ini Edit, ambil gambar lama dulu sebagai default
         if($id){
-            $this->kostum->update($id,$data);
+            $oldItem = $this->kostum->find($id);
+            $data['gambar'] = $oldItem['gambar'];
+        }
+
+        // 3. Proses Upload Gambar Baru (Jika ada yang diupload)
+        if(isset($_FILES['gambar']) && $_FILES['gambar']['error'] === 0){
+            $allowTypes = ['jpg','jpeg','png','webp'];
+            $fileName = $_FILES['gambar']['name'];
+            $fileTmp = $_FILES['gambar']['tmp_name'];
+            $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+
+            if(in_array($ext, $allowTypes)){
+                $newFileName = uniqid() . '.' . $ext; // Nama unik
+                $dest = __DIR__ . '/../../public/assets/images/' . $newFileName;
+                
+                // Pindahkan file ke folder tujuan
+                if(move_uploaded_file($fileTmp, $dest)){
+                    $data['gambar'] = $newFileName; // Simpan nama baru
+                    
+                    // Hapus gambar lama agar tidak menuh-menuhin penyimpanan
+                    if($id && !empty($oldItem['gambar']) && file_exists(__DIR__ . '/../../public/assets/images/' . $oldItem['gambar'])){
+                        unlink(__DIR__ . '/../../public/assets/images/' . $oldItem['gambar']);
+                    }
+                }
+            }
+        }
+
+        // 4. Simpan ke Database
+        if($id){
+            $this->kostum->update($id, $data);
         } else {
             $this->kostum->create($data);
         }

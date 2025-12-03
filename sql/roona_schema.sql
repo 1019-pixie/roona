@@ -24,6 +24,7 @@ CREATE TABLE kostum (
   harga_sewa DECIMAL(12,2) NOT NULL,
   deskripsi TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  gambar VARCHAR(255) DEFAULT NULL,
   FOREIGN KEY (kategori_id) REFERENCES kategori_kostum(id) ON DELETE SET NULL
 );
 

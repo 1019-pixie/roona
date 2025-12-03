@@ -1,1 +1,147 @@
-/* empty - styles in header */
+/* --- ANIME THEME VARIABLES --- */
+:root {
+    --anime-bg: #2b2d42; /* Dark Blue Base */
+    --anime-primary: #ff7eb3; /* Pink Sakura */
+    --anime-secondary: #7afcff; /* Cyber Blue */
+    --anime-card-bg: rgba(255, 255, 255, 0.9); /* Glass Effect */
+    --anime-text: #2d3436;
+    --font-header: 'Fredoka', sans-serif;
+    --font-body: 'Nunito', sans-serif;
+}
+
+/* Background dengan pola bintik halus ala manga/anime */
+body.anime-theme {
+    background-color: #fce4ec; /* Pink sangat muda */
+    background-image: 
+        radial-gradient(#ff7eb3 1px, transparent 1px), 
+        radial-gradient(#ff7eb3 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    font-family: var(--font-body);
+    color: var(--anime-text);
+}
+
+/* Navbar Custom */
+.navbar {
+    background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%) !important;
+    box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-bottom: 15px;
+}
+
+.navbar-brand {
+    font-family: var(--font-header);
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* Kartu / Card Style (Glassmorphism) */
+.card {
+    border: none;
+    border-radius: 20px;
+    background: var(--anime-card-bg);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(255, 126, 179, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(255, 126, 179, 0.25) !important;
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 2px dashed #ffe0f0;
+    font-family: var(--font-header);
+    color: #ff5e9a;
+}
+
+/* Judul Halaman */
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-header);
+    color: #4a4a4a;
+}
+
+/* Tombol-tombol Cute */
+.btn-primary {
+    background: linear-gradient(45deg, #ff7eb3, #ff758c);
+    border: none;
+    border-radius: 50px; /* Tombol bulat */
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 126, 179, 0.4);
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #ff9ec4, #ff8fa3);
+    transform: scale(1.05);
+}
+
+.btn-outline-primary {
+    border: 2px solid #ff7eb3;
+    color: #ff7eb3;
+    border-radius: 50px;
+    font-weight: 700;
+}
+
+.btn-outline-primary:hover {
+    background: #ff7eb3;
+    color: white;
+}
+
+/* Tabel Admin */
+.table {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #fff0f5; /* Lavender Blush */
+    color: #d63384;
+    font-family: var(--font-header);
+}
+
+/* Badge Status */
+.badge {
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Avatar Vendor di Katalog */
+.vendor-info img {
+    border: 2px solid #ff7eb3;
+    padding: 2px;
+}
+
+/* Khusus Dashboard Admin Cards - Warna Warni */
+.bg-primary.card { /* Biru diganti Pink Gradient */
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%) !important;
+    border: none;
+}
+.bg-success.card { /* Hijau diganti Mint Gradient */
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%) !important;
+    border: none;
+}
+.bg-warning.card { /* Kuning diganti Orange Gradient */
+    background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%) !important;
+    border: none;
+}
