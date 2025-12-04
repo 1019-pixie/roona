@@ -15,10 +15,9 @@
                         <div class="col-md-5 bg-light d-flex align-items-center justify-content-center p-4">
                              <?php
                                 // Logika Cek Gambar (Sama seperti di Katalog)
-                                if(!empty($item['gambar']) && file_exists('assets/images/'.$item['gambar'])){
+                                if(!empty($item['gambar'])){
                                     $imgSrc = 'assets/images/'.$item['gambar'];
                                 } else {
-                                    // Placeholder jika tidak ada gambar
                                     $imgSrc = 'https://placehold.co/400x500/png?text='.urlencode($item['nama']);
                                 }
                              ?>
