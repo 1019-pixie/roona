@@ -20,7 +20,7 @@
                         
                         <div class="mb-3">
                             <label class="form-label small fw-bold text-muted ms-3">Nama Lengkap</label>
-                            <input type="text" name="nama" class="form-control form-control-lg fs-6 ps-4" required placeholder="Cosplayer Name">
+                            <input type="text" name="nama" class="form-control form-control-lg fs-6 ps-4" required placeholder="Your Name">
                         </div>
 
                         <div class="mb-3">
