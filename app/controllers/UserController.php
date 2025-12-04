@@ -30,47 +30,20 @@ class UserController {
         include __DIR__ . '/../views/user/kostum_detail.php';
     }
 
-public function createBooking(){
-        // --- MULAI KODE DEBUG ---
-        // Kita lihat, apakah sistem mengenal siapa kamu?
-        if(!isset($_SESSION['user'])){ 
-            echo "<div style='padding:50px; text-align:center; font-family:sans-serif;'>";
-            echo "<h1 style='color:red;'>⚠️ Sesi Hilang!</h1>";
-            echo "<p>Sistem tidak menemukan data login kamu saat tombol ditekan.</p>";
-            echo "<h3>Isi Data Session Saat Ini:</h3>";
-            echo "<pre style='background:#f4f4f4; padding:20px; border:1px solid #ccc; display:inline-block; text-align:left;'>";
-            var_dump($_SESSION); // <-- Ini akan mencetak isi sesi
-            echo "</pre>";
-            echo "<br><br><a href='index.php?action=login'>Kembali Login</a>";
-            echo "</div>";
-            exit; 
-        }
-        // --- SELESAI KODE DEBUG ---
-
-        // Jika lolos (sesi ada), lanjut proses normal
+    public function createBooking(){
+        if(!isset($_SESSION['user'])){ header('Location: index.php?action=login'); exit; }
         $user_id = $_SESSION['user']['id'];
         $tanggal = $_POST['tanggal_booking'] ?? date('Y-m-d');
         $items = $_POST['items'] ?? [];
-        
-        // Cek apakah item kosong
-        if(empty($items)){ 
-            echo "Item kosong! Kembali ke katalog."; 
-            exit; 
-        }
+        if(empty($items)){ header('Location: index.php?action=catalog'); exit; }
 
         $booking_id = $this->booking->create($user_id, $tanggal);
         $total = 0;
         foreach($items as $kostum_id => $qty){
             $k = $this->kostum->find($kostum_id);
             if(!$k) continue;
-            
-            // --- FIX BUG STOK MINUS ---
-            // Cek stok dulu sebelum mengurangi
             $qty = intval($qty);
             if($qty <= 0) continue;
-            if($k['stok'] < $qty) continue; // Skip jika stok kurang
-            // -------------------------
-
             $subtotal = $k['harga_sewa'] * $qty;
             $total += $subtotal;
             $this->detail->create($booking_id, $kostum_id, $qty, $subtotal);
