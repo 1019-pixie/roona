@@ -71,3 +71,4 @@ VALUES
 ('Kebaya Merah', 1, 'M', 5, 100000, 'Kebaya tradisional warna merah'),
 ('Baju Putri', 3, 'L', 2, 150000, 'Kostum bergaya putri kerajaan'),
 ('Setelan Jas', 2, 'M', 3, 120000, 'Jas formal untuk pria');
+gambar
