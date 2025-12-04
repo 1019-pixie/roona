@@ -56,7 +56,7 @@ class AdminController {
 
         // 3. Proses Upload Gambar Baru (Jika ada yang diupload)
         if(isset($_FILES['gambar']) && $_FILES['gambar']['error'] === 0){
-            $allowTypes = ['jpg','jpeg','png','webp'];
+            $allowTypes = ['jpg','jpeg','png','webp', 'gif'];
             $fileName = $_FILES['gambar']['name'];
             $fileTmp = $_FILES['gambar']['tmp_name'];
             $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));

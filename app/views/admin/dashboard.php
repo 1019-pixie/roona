@@ -1,17 +1,17 @@
 <?php include __DIR__ . '/../partials/header.php'; ?>
 
 <div class="container py-4">
-    <div class="p-4 mb-4 bg-white rounded-4 shadow-sm d-flex align-items-center position-relative overflow-hidden">
-        <div style="position:absolute; right:-50px; top:-50px; width:200px; height:200px; background:#ffe0f0; border-radius:50%; opacity:0.5;"></div>
-        
+    <div class="p-4 mb-4 bg-white shadow-sm d-flex align-items-center position-relative overflow-hidden" style="border-radius: 40px;">
+       
         <div class="flex-grow-1 position-relative" style="z-index:1;">
             <h2 class="fw-bold text-dark mb-1">Ohayou, Admin-san! 👋</h2>
             <p class="text-muted mb-0">Semangat mengelola kostum hari ini ya!</p>
         </div>
         
         <div class="d-none d-md-block ms-4">
-            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z5aHZ5aHZ5aHZ5aHZ5aHZ5aHZ5aHZ5aHZ5aHZ5aHZ5aHZ5/QYi2T9K1k12P8a614d/giphy.gif" 
-                 style="height:80px; border-radius:10px;" alt="Mascot">
+            <img src="assets/images/gojo.gif" 
+                 style="height:120px; object-fit:contain; border-radius: 35px;" 
+                 alt="Mascot Admin">
         </div>
     </div>
 

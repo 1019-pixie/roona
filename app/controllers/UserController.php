@@ -20,7 +20,7 @@ class UserController {
     }
 
     public function catalog(){
-        $items = $this->kostum->all();
+        $items = $this->kostum->allAvailable(); 
         include __DIR__ . '/../views/user/catalog.php';
     }
 

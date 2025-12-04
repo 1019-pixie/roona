@@ -18,8 +18,13 @@
 <body class="anime-theme d-flex flex-column min-vh-100">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="index.php?action=catalog">Roona</a>
+  <div class="container-fluid px-4">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.php?action=catalog">
+        <img src="assets/images/logo.jpg" alt="Logo" width="50" height="50" 
+             class="d-inline-block align-text-top bg-white rounded-circle p-1">
+        
+        <span>Roona</span>
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>

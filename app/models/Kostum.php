@@ -8,6 +8,11 @@ class Kostum {
         return $stmt->fetchAll();
     }
 
+    public function allAvailable(){
+        // Perhatikan bagian WHERE k.stok > 0
+        $stmt = $this->pdo->query("SELECT k.*, c.nama as kategori FROM kostum k LEFT JOIN kategori_kostum c ON k.kategori_id=c.id WHERE k.stok > 0 ORDER BY k.created_at DESC");
+        return $stmt->fetchAll();
+    }
     public function find($id){
         $stmt = $this->pdo->prepare("SELECT k.*, c.nama as kategori FROM kostum k LEFT JOIN kategori_kostum c ON k.kategori_id=c.id WHERE k.id=:id");
         $stmt->execute(['id'=>$id]);
