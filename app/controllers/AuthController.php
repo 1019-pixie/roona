@@ -1,4 +1,5 @@
 <?php
+use Firebase\JWT\JWT;
 require_once __DIR__ . '/../models/User.php';
 class AuthController {
     private $pdo;
@@ -12,13 +13,33 @@ class AuthController {
         include __DIR__ . '/../views/auth/login.php';
     }
 
-    public function login(){
+   public function login(){
         $email = $_POST['email'] ?? '';
         $pass = $_POST['password'] ?? '';
         $user = $this->userModel->findByEmail($email);
+        
         if($user && password_verify($pass, $user['password'])){
-          //  session_regenerate_id();
-            $_SESSION['user'] = ['id'=>$user['id'],'nama'=>$user['nama'],'role'=>$user['role']];
+            
+
+            $payload = [
+                'iss' => 'roona-app', // Penerbit
+                'iat' => time(),      // Waktu dibuat
+                'exp' => time() + (60 * 60 * 24), // Kadaluarsa (24 jam)
+                'data' => [
+                    'id' => $user['id'],
+                    'nama' => $user['nama'],
+                    'role' => $user['role']
+                ]
+            ];
+
+
+            $key = $_ENV['JWT_SECRET'] ?? 'default_secret';
+            $jwt = JWT::encode($payload, $key, 'HS256');
+
+
+            setcookie('X-ROONA-SESSION', $jwt, time() + (60 * 60 * 24), "/", "", false, true);
+            
+
             header('Location: index.php?action=catalog');
             exit;
         } else {
@@ -45,8 +66,12 @@ class AuthController {
     }
 
     public function logout(){
+
         session_unset();
         session_destroy();
+        
+        setcookie('X-ROONA-SESSION', '', time() - 3600, "/");
+        
         header('Location: index.php?action=login');
     }
 }

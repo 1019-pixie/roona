@@ -1,6 +1,48 @@
 <?php
+// 1. Load Library yang barusan diinstall
+require_once __DIR__ . '/../vendor/autoload.php'; 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+// 2. Load file .env secara manual (agar bisa baca JWT_SECRET)
+$envPath = __DIR__ . '/../.env';
+if (file_exists($envPath)) {
+    $lines = file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) continue;
+        list($name, $value) = explode('=', $line, 2);
+        $_ENV[trim($name)] = trim($value);
+    }
+}
+
+// 3. Mulai Session PHP (Hanya untuk memori sementara, bukan penyimpanan)
 session_start();
+
+// 4. --- LOGIKA JWT (PENTING) ---
+// Cek apakah ada cookie bernama 'X-ROONA-SESSION'
+if (isset($_COOKIE['X-ROONA-SESSION'])) {
+    try {
+        $secret_key = $_ENV['JWT_SECRET'] ?? 'default_secret';
+        $jwt = $_COOKIE['X-ROONA-SESSION'];
+        
+        // Coba buka (decode) tokennya
+        $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
+        
+        // Ubah isinya jadi array
+        $userData = (array) $decoded->data;
+        
+        // Masukkan data token ke dalam SESSION PHP
+        // Jadi kodingan lain (User/Admin Controller) tahunya user sudah login
+        $_SESSION['user'] = $userData;
+        
+    } catch (Exception $e) {
+        // Jika token palsu/kadaluarsa, hapus cookie & session
+        setcookie('X-ROONA-SESSION', '', time() - 3600, "/");
+        unset($_SESSION['user']);
+    }
+}
 require_once __DIR__ . '/../app/db.php';
+
 
 // simple autoload
 spl_autoload_register(function($class){
