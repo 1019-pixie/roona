@@ -1,4 +1,4 @@
-# Sistem Informasi Buku Tamu Digital (SIBUTAD)
+# Sistem Informasi Penyewaan Kostum (ROONA)
 **Capstone Project** - Mata Kuliah Pemrograman Berbasis Objek. <br>
 Roona adalah website penyewaan kostum yang mempermudah pengecekan ketersediaan, pemesanan, dan pengelolaan inventaris secara real-time. Dibangun dengan OOP dan CRUD, sistem ini menyediakan katalog digital, booking online, dan riwayat transaksi untuk mencegah double-booking serta meningkatkan efisiensi dan profesionalisme layanan penyewaan kostum.
 
