@@ -17,7 +17,7 @@ class AuthController {
         $pass = $_POST['password'] ?? '';
         $user = $this->userModel->findByEmail($email);
         if($user && password_verify($pass, $user['password'])){
-            session_regenerate_id();
+          //  session_regenerate_id();
             $_SESSION['user'] = ['id'=>$user['id'],'nama'=>$user['nama'],'role'=>$user['role']];
             header('Location: index.php?action=catalog');
             exit;
