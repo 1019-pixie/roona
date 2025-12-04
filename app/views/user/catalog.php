@@ -11,11 +11,9 @@
     <div class="card h-100 shadow-sm border-0 hover-card">
 <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px; overflow:hidden;">
         <?php 
-            // Cek apakah ada file gambar di database & folder
-            if(!empty($it['gambar']) && file_exists('assets/images/'.$it['gambar'])){
+            if(!empty($it['gambar'])){
                 $imgSrc = 'assets/images/'.$it['gambar'];
             } else {
-                // Gambar default jika kosong
                 $imgSrc = 'https://placehold.co/400x300/png?text='.urlencode($it['nama']);
             }
         ?>
